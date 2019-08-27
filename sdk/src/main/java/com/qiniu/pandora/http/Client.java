@@ -3,6 +3,7 @@ package com.qiniu.pandora.http;
 import com.qiniu.pandora.common.Configuration;
 import com.qiniu.pandora.common.Constants;
 import com.qiniu.pandora.common.QiniuException;
+import com.qiniu.pandora.util.SSLSocketClient;
 import com.qiniu.pandora.util.StringMap;
 import com.qiniu.pandora.util.StringUtils;
 import okhttp3.*;
@@ -133,6 +134,9 @@ public class Client {
         builder.connectTimeout(connTimeout, TimeUnit.SECONDS);
         builder.readTimeout(readTimeout, TimeUnit.SECONDS);
         builder.writeTimeout(writeTimeout, TimeUnit.SECONDS);
+        builder.sslSocketFactory(SSLSocketClient.getSSLSocketFactory(), SSLSocketClient.getX509TrustManager());
+        builder.hostnameVerifier(SSLSocketClient.getHostnameVerifier());
+        
         httpClient = builder.build();
     }
 
